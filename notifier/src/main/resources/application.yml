@@ -1,0 +1,8 @@
+# SERVER CONFIGURATION
+server:
+  port: 8082
+
+# APP CONFIGURATION
+spring:
+  application:
+    name: notifier

@@ -1,0 +1,6 @@
+# Project exclude paths
+/coordinator/target/
+/notifier/target/
+/registrator/target/
+/.idea
+**/target
