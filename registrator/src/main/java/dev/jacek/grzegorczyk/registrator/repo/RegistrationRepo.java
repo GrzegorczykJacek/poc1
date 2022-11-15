@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RegistrationRepo extends JpaRepository<Registration, Long> {
+
+    void deleteByTransactionId(String transactionId);
 }

@@ -12,6 +12,8 @@
     <module>coordinator</module>
     <module>registrator</module>
       <module>notifier</module>
+      <module>transaction-trace</module>
+      <module>orchestrator</module>
   </modules>
 
   <name>poc1</name>

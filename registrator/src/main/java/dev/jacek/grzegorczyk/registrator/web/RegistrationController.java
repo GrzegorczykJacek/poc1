@@ -1,8 +1,9 @@
 package dev.jacek.grzegorczyk.registrator.web;
 
-import dev.jacek.grzegorczyk.registrator.model.RegistrationDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import dev.jacek.grzegorczyk.TransactionEnvelope;
 import dev.jacek.grzegorczyk.registrator.model.RegistrationDTOOut;
-import dev.jacek.grzegorczyk.registrator.service.RegistrationService;
+import dev.jacek.grzegorczyk.registrator.service.registration.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,14 @@ public class RegistrationController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public RegistrationDTOOut register(@RequestBody @Valid RegistrationDTO registrationDTO) {
-        log.info("REGISTRATOR API register a new request for: {}", registrationDTO);
-        return registrationService.create(registrationDTO);
+    public RegistrationDTOOut register(@RequestBody @Valid TransactionEnvelope envelope) throws JsonProcessingException {
+        log.info("REGISTRATOR API register a new request for: {}", envelope);
+        return registrationService.create(envelope);
+    }
+
+    @DeleteMapping("/{transactionId}")
+    void delete(@PathVariable String transactionId) {
+        log.info("REGISTRATOR API delete request for {}", transactionId);
+        registrationService.deleteByTransactionId(transactionId);
     }
 }

@@ -18,6 +18,8 @@ public class Registration {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    private String transactionId;
+
     @NotNull
     private String contents;
 }
