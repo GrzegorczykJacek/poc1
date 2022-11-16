@@ -1,7 +1,22 @@
 services:
   rabbitmq:
-    image: rabbitmq:3.9.11-management-alpine
+    image: rabbitmq:3.10.6-management-alpine
     container_name: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
+    volumes:
+      - ./rabbitmqinit/rabbitmq-enabled-plugins:/etc/rabbitmq/enabled_plugins
+      - ./rabbitmqinit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./rabbitmqinit/definitions.json:/etc/rabbitmq/definitions.json
+
+  postgres:
+    image: postgres:14.5
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=coordinator
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pginit:/docker-entrypoint-initdb.d
