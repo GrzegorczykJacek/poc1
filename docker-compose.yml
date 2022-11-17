@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   rabbitmq:
     image: rabbitmq:3.10.6-management-alpine
@@ -10,8 +12,27 @@ services:
       - ./rabbitmqinit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
       - ./rabbitmqinit/definitions.json:/etc/rabbitmq/definitions.json
 
+  zookeeper:
+    image: debezium/zookeeper:${DEBEZIUM_VERSION}
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+
+  kafka:
+    image: debezium/kafka:${DEBEZIUM_VERSION}
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    links:
+      - zookeeper
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+
   postgres:
-    image: postgres:14.5
+    image: debezium/example-postgres:${DEBEZIUM_VERSION}
+    container_name: poc-postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
@@ -20,3 +41,18 @@ services:
       - "5432:5432"
     volumes:
       - ./pginit:/docker-entrypoint-initdb.d
+
+  connect:
+    image: debezium/connect:${DEBEZIUM_VERSION}
+    container_name: connect
+    ports:
+      - "8083:8083"
+    links:
+      - kafka
+      - postgres
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses

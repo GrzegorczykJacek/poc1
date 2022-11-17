@@ -3,7 +3,7 @@ package dev.jacek.grzegorczyk.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.jacek.grzegorczyk.entities.ApiMessage;
-import dev.jacek.grzegorczyk.entities.OutboxMessage;
+import dev.jacek.grzegorczyk.entities.OutboxEvent;
 import dev.jacek.grzegorczyk.enums.OutboxOperation;
 import dev.jacek.grzegorczyk.repo.OutboxMessageRepo;
 import lombok.RequiredArgsConstructor;
@@ -21,17 +21,18 @@ public class OutboxServiceImpl implements OutboxService {
     @Override
     public void writeToOutbox(ApiMessage apiMessage, OutboxOperation operation) {
         log.info("OUTBOX: {} with: {}", operation, apiMessage);
-        OutboxMessage outboxMessage = new OutboxMessage();
+        OutboxEvent outboxEvent = new OutboxEvent();
 
         try {
             String message = objectMapper.writeValueAsString(apiMessage);
-            outboxMessage.setMessage(message);
+            outboxEvent.setPayload(message);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        outboxMessage.setOperation(operation);
-        outboxMessage.setAggregate(API_MESSAGE_AGGREGATE);
+        outboxEvent.setOperation(operation);
+        outboxEvent.setAggregateType(API_MESSAGE_AGGREGATE);
+        outboxEvent.setAggregateId(apiMessage.getId().toString());
 
-        outboxMessageRepo.save(outboxMessage);
+        outboxMessageRepo.save(outboxEvent);
     }
 }

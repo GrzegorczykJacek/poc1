@@ -11,17 +11,22 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class OutboxMessage {
+public class OutboxEvent {
 
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private UUID id;
 
-    private String aggregate;
+    @Column(name = "aggregateid")
+    private String aggregateId;
 
+    @Column(name = "aggregatetype")
+    private String aggregateType;
+
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private OutboxOperation operation;
 
-    private String message;
+    private String payload;
 }
