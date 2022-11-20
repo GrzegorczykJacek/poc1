@@ -30,9 +30,5 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
   "database.dbname" : "coordinator",
   "database.server.name": "localhost",
   "tombstones.on.delete" : "false",
-  "table.whitelist" : "coordinator.outbox_event",
-  "transforms" : "outbox",
-  "transforms.outbox.type" : "io.debezium.transforms.outbox.EventRouter",
-  "transforms.outbox.route.topic.replacement" : "coordinator.events",
-  "transforms.outbox.table.fields.additional.placement" : "aggregateid:envelope:id"}
+  "table.whitelist" : "coordinator.outbox_event"}
 }'

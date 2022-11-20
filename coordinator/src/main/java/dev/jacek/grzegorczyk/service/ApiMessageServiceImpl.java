@@ -38,7 +38,7 @@ public class ApiMessageServiceImpl implements ApiMessageService {
         outboxService.writeToOutbox(apiMessage, API_MESSAGE_CREATE);
 
         // This will fire an exception
-        generateRuntimeException();
+//        generateRuntimeException();
 
         return apiMessageDTOOut;
     }
