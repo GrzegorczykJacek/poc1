@@ -1,11 +1,20 @@
 ## POC - recovery mechanism in async integrated environment
 
-The app presents a recovery mechanism approach to clean up the mess after one of the async communicated app fails resulting in transaction rollback.
-Other apps may end up with inconsistent data state...
+The app presents an implementation of Outbox Pattern with Postgres and Debezium for Kafka
 
 ### To run the apps first run the dev environment:
 - postgres databases
-- RabbitMQ server
-by running the docker container.
+- Kafka server
+- Debezium connect
+by running the script.
 
-```docker-compose up -d```
+```./startDevEnv.sh```
+
+### Test the app by sending a post request to Coordinator:
+```
+{
+    "message": "Some example message...",
+    "author": "Some example author name..."
+}
+```
+to: http://localhost:8080/api/v1/messages
