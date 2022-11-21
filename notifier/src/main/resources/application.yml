@@ -5,4 +5,6 @@ server:
 # APP CONFIGURATION
 spring:
   application:
-    name: notifier
+    name: notifier\
+  kafka:
+    bootstrap-servers: localhost:29092

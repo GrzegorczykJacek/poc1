@@ -5,7 +5,7 @@ server:
 # APP CONFIGURATION
 spring:
   application:
-    name: coordinator
+    name: registrator\
   datasource:
     url: jdbc:postgresql://localhost:5432/registrator
     username: postgres
