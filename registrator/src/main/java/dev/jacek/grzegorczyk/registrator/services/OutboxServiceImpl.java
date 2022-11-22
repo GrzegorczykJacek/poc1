@@ -1,11 +1,11 @@
-package dev.jacek.grzegorczyk.service;
+package dev.jacek.grzegorczyk.registrator.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.jacek.grzegorczyk.entities.ApiMessage;
-import dev.jacek.grzegorczyk.entities.OutboxEvent;
-import dev.jacek.grzegorczyk.enums.OutboxOperation;
-import dev.jacek.grzegorczyk.repo.OutboxEventRepo;
+import dev.jacek.grzegorczyk.registrator.entities.OutboxEvent;
+import dev.jacek.grzegorczyk.registrator.entities.Registration;
+import dev.jacek.grzegorczyk.registrator.enums.OutboxOperation;
+import dev.jacek.grzegorczyk.registrator.repo.OutboxEventRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,19 +19,19 @@ public class OutboxServiceImpl implements OutboxService {
     private final ObjectMapper objectMapper;
 
     @Override
-    public void writeToOutbox(ApiMessage apiMessage, OutboxOperation operation) {
-        log.info("OUTBOX: {} with: {}", operation, apiMessage);
+    public void writeToOutbox(Registration registration, OutboxOperation operation) {
+        log.info("OUTBOX: {} with: {}", operation, registration);
         OutboxEvent outboxEvent = new OutboxEvent();
 
         try {
-            String message = objectMapper.writeValueAsString(apiMessage);
+            String message = objectMapper.writeValueAsString(registration);
             outboxEvent.setPayload(message);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         outboxEvent.setOperation(operation);
-        outboxEvent.setAggregateType(API_MESSAGE_AGGREGATE);
-        outboxEvent.setAggregateId(apiMessage.getId().toString());
+        outboxEvent.setAggregateType(REGISTRATION_AGGREGATE);
+        outboxEvent.setAggregateId(registration.getId().toString());
 
         outboxEventRepo.save(outboxEvent);
     }

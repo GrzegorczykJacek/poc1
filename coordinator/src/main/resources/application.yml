@@ -17,3 +17,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: coordinator
+  kafka:
+    bootstrap-servers: localhost:29092
