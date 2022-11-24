@@ -30,7 +30,7 @@ public class KafkaListeners {
             String contents = payload.getAfter().getContents();
             log.info("KAFKA MESSAGE DESERIALIZED: id: {}, contents: {}", id, contents);
 
-            kafkaTemplate.send("registered-messages", contents);
+            kafkaTemplate.send("registered-messages", "1",  contents);
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
