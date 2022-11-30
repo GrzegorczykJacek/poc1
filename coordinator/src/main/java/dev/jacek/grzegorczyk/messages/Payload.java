@@ -7,15 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Payload {
 
-    private String before = null;
+    private String payload;
 
-    After after;
-
-    Source source;
-
-    private String op;
-
-    private float ts_ms;
-
-    private String transaction = null;
+    private String uuid;
 }

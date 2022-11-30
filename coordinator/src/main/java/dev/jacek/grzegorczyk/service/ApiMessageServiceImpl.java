@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static dev.jacek.grzegorczyk.enums.OutboxOperation.API_MESSAGE_CREATE;
+import static dev.jacek.grzegorczyk.enums.OutboxOperation.API_MESSAGE_UPDATE;
 
 @Slf4j
 @Service
@@ -41,6 +42,17 @@ public class ApiMessageServiceImpl implements ApiMessageService {
 //        generateRuntimeException();
 
         return apiMessageDTOOut;
+    }
+
+    @Override
+    @Transactional
+    public void setIsRegistered(Long id) {
+        log.info("SET IS REGISTERED for apiMessage with id: {}",id);
+        ApiMessage apiMessage = apiMessageRepo.findById(id).orElseThrow();
+        apiMessage.setRegistered(true);
+        apiMessageRepo.save(apiMessage);
+
+        outboxService.writeToOutbox(apiMessage, API_MESSAGE_UPDATE);
     }
 
     private void generateRuntimeException() {

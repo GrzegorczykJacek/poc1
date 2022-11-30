@@ -26,4 +26,6 @@ public class ApiMessage {
     @NotNull
     private String author;
 
+    private boolean isRegistered;
+
 }

@@ -10,8 +10,10 @@ import java.util.ArrayList;
 public class Schema {
 
     private String type;
+
     ArrayList<Object> fields = new ArrayList<>();
+
     private boolean optional;
+
     private String name;
-    private float version;
 }
