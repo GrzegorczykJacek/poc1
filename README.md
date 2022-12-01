@@ -8,7 +8,9 @@ The app presents an implementation of Outbox Pattern with Postgres and Debezium 
 - Debezium connect
 by running the script.
 
-```./startDevEnv.sh```
+``` bash
+./startDevEnv.sh
+```
 
 ### Test the app by sending a post request to Coordinator:
 ```
