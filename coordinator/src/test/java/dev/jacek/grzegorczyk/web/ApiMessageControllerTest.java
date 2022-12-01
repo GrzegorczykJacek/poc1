@@ -56,4 +56,6 @@ class ApiMessageControllerTest {
                 .andExpect(jsonPath("$.author", is(apiMessageDTO.getAuthor())));
         verify(apiMessageService, times(1)).create(apiMessageDTOArgumentCaptor.capture());
     }
+
+
 }
