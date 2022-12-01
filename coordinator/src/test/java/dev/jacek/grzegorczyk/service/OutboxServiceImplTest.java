@@ -40,19 +40,25 @@ class OutboxServiceImplTest {
     @Test
     void shouldWriteToOutbox() throws JsonProcessingException {
         // Given
-        ApiMessage apiMessage = new ApiMessage();
+        var apiMessage = new ApiMessage();
         apiMessage.setMessage("Test message...");
         apiMessage.setAuthor("Test author...");
         apiMessage.setId(1L);
 
-        String message = "{\"id\": 1, \"message\": \"Test message...\"}";
+        var message = "{\"id\": 1, \"message\": \"Test message...\"}";
         given(objectMapper.writeValueAsString(any())).willReturn(message);
 
         // When
         outboxService.writeToOutbox(apiMessage, API_MESSAGE_CREATE);
 
         // Then
-        ArgumentCaptor<OutboxEvent> outboxEventCaptor = ArgumentCaptor.forClass(OutboxEvent.class);
+        var outboxEventCaptor = ArgumentCaptor.forClass(OutboxEvent.class);
+        var apiMessageCaptor = ArgumentCaptor.forClass(ApiMessage.class);
+        verify(objectMapper, times(1)).writeValueAsString(apiMessageCaptor.capture());
+        assertEquals(apiMessage.getId(), apiMessageCaptor.getValue().getId());
+        assertEquals(apiMessage.getMessage(), apiMessageCaptor.getValue().getMessage());
+        assertEquals(apiMessage.getAuthor(), apiMessageCaptor.getValue().getAuthor());
+
         verify(outboxEventRepo, times(1)).save(outboxEventCaptor.capture());
         assertEquals(message, outboxEventCaptor.getValue().getPayload());
         assertEquals(API_MESSAGE_CREATE, outboxEventCaptor.getValue().getOperation());
