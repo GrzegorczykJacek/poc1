@@ -1,7 +1,6 @@
 package dev.jacek.grzegorczyk.registrator.messages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.jacek.grzegorczyk.registrator.entities.Registration;
 import dev.jacek.grzegorczyk.registrator.repo.RegistrationRepo;
@@ -25,18 +24,16 @@ public class KafkaListeners {
     private final OutboxService outboxService;
 
     @KafkaListener(topics = "outbox.event.ApiMessage",
-            groupId = "registrator_group_id")
-    void listener(String data) {
+            groupId = "registrator_group_id",
+            containerFactory = "kafkaMessageListenerContainerFactory")
+    void listener(KafkaMessage kafkaMessage) {
 
+        Payload payload = kafkaMessage.getPayload();
+        String uuid = payload.getUuid();
+
+        String messagePayload = payload.getPayload();
         try {
-            KafkaMessage kafkaMessage = objectMapper.readValue(data, new TypeReference<>() {
-            });
-            Payload payload = kafkaMessage.getPayload();
-            String uuid = payload.getUuid();
-
-            String messagePayload = payload.getPayload();
-            ApiMessagePayload apiMessagePayload = objectMapper.readValue(messagePayload, new TypeReference<>() {
-            });
+            ApiMessagePayload apiMessagePayload = objectMapper.readValue(messagePayload, ApiMessagePayload.class);
             Long id = apiMessagePayload.getId();
             String author = apiMessagePayload.getAuthor();
             String message = apiMessagePayload.getMessage();

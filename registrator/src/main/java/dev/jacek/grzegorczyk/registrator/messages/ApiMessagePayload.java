@@ -1,10 +1,8 @@
 package dev.jacek.grzegorczyk.registrator.messages;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ApiMessagePayload {
 
     private Long id;
