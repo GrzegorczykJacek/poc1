@@ -7,7 +7,8 @@ The app presents an implementation of Outbox Pattern with Postgres and Debezium 
 - Kafka server
 - Debezium connect
 - akhq
-by running the script.
+
+by running the script:
 
 ``` bash
 ./startDevEnv.sh
