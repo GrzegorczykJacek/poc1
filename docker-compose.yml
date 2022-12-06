@@ -38,7 +38,7 @@ services:
       - "8010:8080"
 
   postgres:
-    image: debezium/example-postgres:${DEBEZIUM_VERSION}
+    image: postgres:14.5
     container_name: poc-postgres
     hostname: postgres
     environment:
@@ -49,6 +49,7 @@ services:
       - "5432:5432"
     volumes:
       - ./pginit:/docker-entrypoint-initdb.d
+    command: [ "postgres", "-c", "wal_level=logical" ]
 
   connect:
     image: debezium/connect:${DEBEZIUM_VERSION}

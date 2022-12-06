@@ -21,6 +21,7 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 "name": "apimessage-outbox-connector",
 "config": {
   "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+  "plugin.name": "pgoutput",
   "slot.name" : "coordinator",
   "tasks.max": "1",
   "database.hostname": "postgres",
@@ -38,11 +39,12 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 
 sleep 4
 
-echo -e '-----     Create a connector and outbox event router for: registration'
+echo -e '\n\n-----     Create a connector and outbox event router for: registration'
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{
 "name": "registration-outbox-connector",
 "config": {
   "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+  "plugin.name": "pgoutput",
   "slot.name" : "registrator",
   "tasks.max": "1",
   "database.hostname": "postgres",
