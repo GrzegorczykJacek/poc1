@@ -1,0 +1,19 @@
+# SERVER CONFIGURATION
+server:
+  port: 8084
+
+# APP CONFIGURATION
+spring:
+  application:
+    name: http-handler-1
+  datasource:
+    url: jdbc:postgresql://localhost:5432/coordinator
+    username: postgres
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: httphandler1
