@@ -1,11 +1,11 @@
 # SERVER CONFIGURATION
 server:
-  port: 8084
+  port: 8085
 
 # APP CONFIGURATION
 spring:
   application:
-    name: http-handler-1
+    name: http-handler-2
 
 # FEIGN CLIENT
 feign:

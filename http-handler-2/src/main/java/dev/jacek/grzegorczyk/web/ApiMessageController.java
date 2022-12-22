@@ -20,6 +20,7 @@ import javax.validation.Valid;
 public class ApiMessageController {
 
     private final Tracer tracer;
+
     private final ApiMessageClient apiMessageClient;
 
     @PostMapping

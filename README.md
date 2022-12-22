@@ -1,6 +1,7 @@
-## POC - recovery mechanism in async integrated environment
+## POC - recovery mechanism in async integrated environment (with a simple log trace id example)
 
-The app presents an implementation of Outbox Pattern with Postgres and Debezium for Kafka
+The app presents an implementation of Outbox Pattern with Postgres and Debezium for Kafka.
+It also shows a simple example of logging trace ids through http calls with spring cloud (sleuth and open feign)
 
 ### To run the apps first run the dev environment:
 - postgres databases
@@ -14,7 +15,7 @@ by running the script:
 ./startDevEnv.sh
 ```
 
-### Test the app by sending a post request to Coordinator:
+### Test the (outbox pattern) app by sending a post request to Coordinator:
 ```
 {
     "message": "Some example message...",
@@ -22,3 +23,12 @@ by running the script:
 }
 ```
 to: http://localhost:8080/api/v1/messages
+
+### Test the (log tracing) app by sending a post request to http-handler-1 and see that the same trace id (passed by the calls of http-handlers 1 and 2) is present in the logs of http-handler-3:
+```
+{
+    "message": "Some example message...",
+    "author": "Some example author name..."
+}
+```
+to: http://localhost:8084/api/v1/messages

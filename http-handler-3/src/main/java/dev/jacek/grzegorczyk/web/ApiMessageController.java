@@ -1,6 +1,5 @@
 package dev.jacek.grzegorczyk.web;
 
-import dev.jacek.grzegorczyk.http.ApiMessageClient;
 import dev.jacek.grzegorczyk.models.ApiMessageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,18 +19,14 @@ import javax.validation.Valid;
 public class ApiMessageController {
 
     private final Tracer tracer;
-    private final ApiMessageClient apiMessageClient;
 
     @PostMapping
     public void create(@RequestBody @Valid ApiMessageDTO apiMessage) {
-        log.info("API received a new message: {}", apiMessage);
+        log.info("API received a new message with the trace id created in the first http handler: {}", apiMessage);
         Span span = tracer.currentSpan();
         if (span != null) {
             log.info("Trace ID {}", span.context().traceId());
             log.info("Span ID {}", span.context().spanId());
         }
-
-        apiMessageClient.send(apiMessage);
-
     }
 }

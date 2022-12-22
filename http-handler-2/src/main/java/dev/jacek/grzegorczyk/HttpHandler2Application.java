@@ -6,8 +6,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-public class HttpHandler1Application {
+public class HttpHandler2Application {
     public static void main(String[] args) {
-        SpringApplication.run(HttpHandler1Application.class, args);
+        SpringApplication.run(HttpHandler2Application.class, args);
     }
 }
