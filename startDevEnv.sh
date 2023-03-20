@@ -23,6 +23,7 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
   "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
   "plugin.name": "pgoutput",
   "slot.name" : "coordinator",
+  "topic.prefix":"coordinator",
   "tasks.max": "1",
   "database.hostname": "postgres",
   "database.port": "5432",
@@ -31,7 +32,7 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
   "database.dbname": "coordinator",
   "database.server.name": "localhost",
   "tombstones.on.delete": "false",
-  "table.whitelist": "coordinator.outbox_event",
+  "table.include.list": "coordinator.outbox_event",
   "transforms": "outbox",
   "transforms.outbox.type": "io.debezium.transforms.outbox.EventRouter",
   "transforms.outbox.table.fields.additional.placement" : "id:envelope:uuid"}
@@ -46,6 +47,7 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
   "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
   "plugin.name": "pgoutput",
   "slot.name" : "registrator",
+  "topic.prefix":"registrator",
   "tasks.max": "1",
   "database.hostname": "postgres",
   "database.port": "5432",
@@ -54,7 +56,7 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
   "database.dbname" : "registrator",
   "database.server.name": "localhost",
   "tombstones.on.delete" : "false",
-  "table.whitelist" : "registrator.outbox_event",
+  "table.include.list" : "registrator.outbox_event",
   "transforms": "outbox",
   "transforms.outbox.type": "io.debezium.transforms.outbox.EventRouter",
   "transforms.outbox.table.fields.additional.placement" : "id:envelope:uuid"}
