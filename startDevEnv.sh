@@ -13,7 +13,7 @@ dockerComposeUp
 
 
 echo '-----     Warming up for You... ;)'
-sleep 10
+sleep 20
 
 # Create a kafka connectors
 echo -e '-----     Create a connector and outbox event router for: apimessage'

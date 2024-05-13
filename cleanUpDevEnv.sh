@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Stop containers based on name prefixes (modify if needed)
-SERVICE_PREFIXES=("poc-" "akhq" "connect" "kafka" "zookeeper")
+SERVICE_PREFIXES=("poc-" "poc1" "akhq" "connect" "kafka" "zookeeper")
 
 # Stop containers with a loop and error handling
 for prefix in "${SERVICE_PREFIXES[@]}"; do
